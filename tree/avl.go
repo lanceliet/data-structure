@@ -7,48 +7,52 @@ type AvlTree struct {
 	h     int
 }
 
-func (t *AvlTree) insert(v int) *AvlTree {
+func (t *AvlTree) Insert(num int) *AvlTree {
 	if t == nil {
 		return &AvlTree{
-			v: v,
+			v: num,
 			h: 1,
 		}
 	}
-	if v < t.v {
-		t.left = t.left.insert(v)
-	} else if v > t.v {
-		t.right = t.right.insert(v)
-	} else {
+	if num == t.v {
 		return t
+	}
+	if num < t.v {
+		t.left = t.left.Insert(num)
+	} else {
+		t.right = t.right.Insert(num)
 	}
 	return t.doBalance()
 }
 
-func (t *AvlTree) delete(v int) *AvlTree {
+func (t *AvlTree) Delete(num int) *AvlTree {
 	if t == nil {
 		return nil
 	}
-	if t.v == v {
+	if num == t.v {
 		if t.left == nil {
 			return t.right
 		}
 		if t.right == nil {
 			return t.left
 		}
-		s := t.right
-		for s.left != nil {
-			s = s.left
-		}
-		t.right = t.right.delete(s.v)
-		t.v = s.v
-		return t.doBalance()
-	}
-	if v < t.v {
-		t.left = t.left.delete(v)
+		d := t.right.leftmostNode()
+		t.right = t.right.Delete(d.v)
+		t.v = d.v
+	} else if num < t.v {
+		t.left = t.left.Delete(num)
 	} else {
-		t.right = t.right.delete(v)
+		t.right = t.right.Delete(num)
 	}
 	return t.doBalance()
+}
+
+func (t *AvlTree) leftmostNode() *AvlTree {
+	node := t
+	for node.left != nil {
+		node = node.left
+	}
+	return node
 }
 
 func (t *AvlTree) doBalance() *AvlTree {

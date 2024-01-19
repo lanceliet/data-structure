@@ -24,7 +24,7 @@ func TestRandomInsertAndDeleteAvl(t *testing.T) {
 			v := arr[idx]
 			arr = slices.Delete(arr, idx, idx+1)
 			delete(dict, v)
-			avl = avl.delete(v)
+			avl = avl.Delete(v)
 			avl.check(len(arr))
 
 		} else {
@@ -33,16 +33,16 @@ func TestRandomInsertAndDeleteAvl(t *testing.T) {
 				arr = append(arr, v)
 				dict[v] = true
 			}
-			avl = avl.insert(v)
+			avl = avl.Insert(v)
 			avl.check(len(arr))
 
 		}
 	}
 
-	// random delete
+	// random Delete
 	for i := 0; i < 10000; i++ {
 		v := rand.Intn(100000)
-		avl = avl.delete(v)
+		avl = avl.Delete(v)
 		avl.check(-1)
 	}
 }

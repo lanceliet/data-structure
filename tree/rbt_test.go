@@ -107,7 +107,7 @@ func TestRandomInsertAndDeleteRbTree(t *testing.T) {
 		}
 	}
 
-	// random delete
+	// random Delete
 	for i := 0; i < 10000; i++ {
 		v := rand.Intn(1000000)
 		tree.Delete(v)
